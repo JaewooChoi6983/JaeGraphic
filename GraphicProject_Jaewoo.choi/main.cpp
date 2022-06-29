@@ -1,43 +1,43 @@
-#include <GLFW/glfw3.h>
+
+#include "glhelper.h"
+#include "Mesh.h"
 #include <iostream>
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    glViewport(0, 0, width, height);
-}
-void processInput(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-}
 int main(void)
 {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    GLHelper::init(800, 600, "Jae_Graphic");
+    
+    std::vector<Mesh> meshes;
+    meshes.push_back(CreateCube(2, 2));
+    meshes[0].init("cube");
+    glm::mat4 view = {
+1,0,0,0,
+0,1,0,0,
+0,0,1,0,
+0,0,0,1
+    };
+    glm::mat4 projection = {
+    1,0,0,0,
+    0,1,0,0,
+    0,0,1,0,
+    0,0,0,1
+    };
+    glm::vec3 eye = { 0.f, 2.f, 5.0f };
+    glm::vec3 light = { 0.0f, 0.0f, 3.0f };
+    Vec4 useNormal = Vec4(0.8f, 0.0f, 0.4f, -1.0f);
+    view = glm::rotate(view, EIGHTH_PI, glm::vec3(1.0f, 0.0f, 0.0f));
+    //view = glm::rotate(view, QUARTER_PI, glm::vec3(0.0f, 1.0f, 0.0f));
+    view = glm::translate(view, -eye);
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Jae_Graphic", NULL, NULL);
-    if (window == NULL)
+    projection = glm::perspective(glm::radians(45.0f), 1.f, 0.1f, 100.0f);
+    while (!glfwWindowShouldClose(GLHelper::ptr_window))
     {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-    glViewport(0, 0, 800, 600);
-    while (!glfwWindowShouldClose(window))
-    {
-        processInput(window);
-
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        glfwSwapBuffers(window);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        meshes[0].draw(useNormal,view,projection,light,eye);
         glfwPollEvents();
+        glfwSwapBuffers(GLHelper::ptr_window);
     }
-    glfwTerminate();
+    GLHelper::cleanup();
     return 0;
 }

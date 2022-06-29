@@ -18,5 +18,36 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glhelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glslshader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Mesh.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="math.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glslshader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glhelper.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cube.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="cube.frag">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
